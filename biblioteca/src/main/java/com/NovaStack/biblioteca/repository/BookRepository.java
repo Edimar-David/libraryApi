@@ -1,6 +1,6 @@
 package com.NovaStack.biblioteca.repository;
 
-import com.NovaStack.biblioteca.dto.book.BookResponseDTO;
+import com.NovaStack.biblioteca.dto.itemLibrary.BookResponseDTO;
 import com.NovaStack.biblioteca.model.Book;
 import com.NovaStack.biblioteca.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {

@@ -1,6 +1,6 @@
 package com.NovaStack.biblioteca.model;
 
-import com.NovaStack.biblioteca.dto.book.BookRequestDTO;
+import com.NovaStack.biblioteca.dto.itemLibrary.BookRequestDTO;
 import com.NovaStack.biblioteca.model.enums.BookCategory;
 import jakarta.persistence.*;
 

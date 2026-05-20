@@ -1,8 +1,8 @@
 package com.NovaStack.biblioteca.controller;
 
 
-import com.NovaStack.biblioteca.dto.book.BookRequestDTO;
-import com.NovaStack.biblioteca.dto.book.BookResponseDTO;
+import com.NovaStack.biblioteca.dto.itemLibrary.BookRequestDTO;
+import com.NovaStack.biblioteca.dto.itemLibrary.BookResponseDTO;
 import com.NovaStack.biblioteca.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

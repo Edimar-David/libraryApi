@@ -21,6 +21,11 @@ public class User {
     String password;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Book> books;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Client> clients;
+
+
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
