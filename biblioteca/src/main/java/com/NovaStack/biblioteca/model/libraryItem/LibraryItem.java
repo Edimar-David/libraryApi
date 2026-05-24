@@ -1,24 +1,24 @@
-package com.NovaStack.biblioteca.model;
+package com.NovaStack.biblioteca.model.libraryItem;
 
-import com.NovaStack.biblioteca.dto.itemLibrary.BookRequestDTO;
-import com.NovaStack.biblioteca.model.enums.BookCategory;
+import com.NovaStack.biblioteca.model.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+import static jakarta.persistence.InheritanceType.JOINED;
+
 @Entity
-public class Book {
+@Inheritance(strategy = JOINED)
+public class LibraryItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     private String author;
-
-    @Enumerated(EnumType.STRING)
-    private BookCategory category;
 
     private LocalDate releaseDate;
 
@@ -28,18 +28,16 @@ public class Book {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public LibraryItem(String name, String author, LocalDate releaseDate, User user) {
 
-    public Book(BookRequestDTO requestDTO, User user) {
-
-        this.name = requestDTO.name();
-        this.author = requestDTO.author();
-        this.category = BookCategory.fromString(requestDTO.category());
-        this.releaseDate = requestDTO.releaseDate();
+        this.name = name;
+        this.author = author;
+        this.releaseDate = releaseDate;
         this.isBorrowed = false;
         this.user = user;
     }
 
-    public Book() {
+    public LibraryItem() {
     }
 
     public Long getId() {
@@ -64,14 +62,6 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public BookCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(BookCategory category) {
-        this.category = category;
     }
 
     public LocalDate getReleaseDate() {

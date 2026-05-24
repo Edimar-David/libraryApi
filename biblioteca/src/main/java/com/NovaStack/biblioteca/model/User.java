@@ -1,8 +1,7 @@
 package com.NovaStack.biblioteca.model;
 
+import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 
 import java.util.List;
 
@@ -19,9 +18,9 @@ public class User {
     String email;
     @Column(nullable = false)
     String password;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Book> books;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<LibraryItem> libraryItems;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Client> clients;
 
 

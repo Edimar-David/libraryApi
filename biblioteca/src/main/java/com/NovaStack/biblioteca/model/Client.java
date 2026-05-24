@@ -1,5 +1,6 @@
 package com.NovaStack.biblioteca.model;
 
+import com.NovaStack.biblioteca.dto.client.ClientRequestDTO;
 import com.NovaStack.biblioteca.model.enums.TypeClient;
 import jakarta.persistence.*;
 
@@ -8,17 +9,37 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeClient typeClient;
-    private int limit;
+
+    private int reserveLimit;
+
     @Column(nullable = false)
     private String acessCode;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Client(ClientRequestDTO requestDTO, User user) {
+        this.name = requestDTO.name();
+        this.typeClient = TypeClient.fromString(requestDTO.typeClient());
+        if(typeClient == TypeClient.SPECIAL){
+            this.reserveLimit = 2;
+        }else{
+            this.reserveLimit = 1;
+        }
+        this.acessCode = requestDTO.acessCode();
+        this.user = user;
+    }
+
+    public Client() {
+    }
 
     public Long getId() {
         return id;
@@ -44,12 +65,12 @@ public class Client {
         this.typeClient = typeClient;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getReserveLimit() {
+        return reserveLimit;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setReserveLimit(int reserveLimit) {
+        this.reserveLimit = reserveLimit;
     }
 
     public String getAcessCode() {
