@@ -1,4 +1,4 @@
-package com.NovaStack.biblioteca.dto.itemLibrary;
+package com.NovaStack.biblioteca.dto.LibraryItem;
 
 import com.NovaStack.biblioteca.model.enums.BookCategory;
 
@@ -8,8 +8,8 @@ public record BookResponseDTO(
         Long id,
         String name,
         String author,
-        BookCategory category,
         LocalDate releaseDate,
-        Boolean isBorrowed
+        Boolean isBorrowed,
+        BookCategory category
 ) {
 }

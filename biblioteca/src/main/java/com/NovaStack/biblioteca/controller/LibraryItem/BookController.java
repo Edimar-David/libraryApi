@@ -1,0 +1,24 @@
+package com.NovaStack.biblioteca.controller.LibraryItem;
+
+
+import com.NovaStack.biblioteca.dto.LibraryItem.BookRequestDTO;
+import com.NovaStack.biblioteca.dto.LibraryItem.BookResponseDTO;
+import com.NovaStack.biblioteca.service.libraryItem.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/book")
+public class BookController {
+
+    @Autowired
+    BookService service;
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createBook(@RequestBody BookRequestDTO requestDTO){
+        BookResponseDTO response = service.createBook(requestDTO);
+        return ResponseEntity.ok().body(response);
+    }
+
+}

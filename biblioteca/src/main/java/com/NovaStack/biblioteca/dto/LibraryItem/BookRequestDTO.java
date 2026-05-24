@@ -1,4 +1,4 @@
-package com.NovaStack.biblioteca.dto.itemLibrary;
+package com.NovaStack.biblioteca.dto.LibraryItem;
 
 import java.time.LocalDate;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public record BookRequestDTO(
         String name,
         String author,
-        String category,
-        LocalDate releaseDate
+        LocalDate releaseDate,
+        String category
 ) {
 }
