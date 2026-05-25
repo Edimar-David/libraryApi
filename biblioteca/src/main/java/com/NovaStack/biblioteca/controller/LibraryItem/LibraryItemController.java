@@ -1,20 +1,28 @@
 package com.NovaStack.biblioteca.controller.LibraryItem;
 
 
+import com.NovaStack.biblioteca.dto.LibraryItem.LibraryItemResponseDTO;
+import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
+import com.NovaStack.biblioteca.service.libraryItem.LibraryItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/libraryItems")
 public class LibraryItemController {
 
-//    @Autowired
-//    BookService service;
-//
-//    @GetMapping("/all")
-//    public ResponseEntity<?> getAllBooks(){
-//        List<BookResponseDTO> response = service.getAllBooks();
-//        return ResponseEntity.ok().body(response);
-//    }
+    @Autowired
+    LibraryItemService service;
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllBooks(){
+        List<LibraryItemResponseDTO> response = service.findAll();
+        return ResponseEntity.ok().body(response);
+    }
+
 //
 //    @GetMapping("/{id}")
 //    public ResponseEntity<?> getBookById(@PathVariable Long id){

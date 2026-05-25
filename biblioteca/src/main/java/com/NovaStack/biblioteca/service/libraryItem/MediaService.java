@@ -1,12 +1,12 @@
 package com.NovaStack.biblioteca.service.libraryItem;
 
-import com.NovaStack.biblioteca.dto.LibraryItem.BookRequestDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.BookResponseDTO;
 import com.NovaStack.biblioteca.dto.LibraryItem.MagazineRequestDTO;
 import com.NovaStack.biblioteca.dto.LibraryItem.MagazineResponseDTO;
+import com.NovaStack.biblioteca.dto.LibraryItem.MediaRequestDTO;
+import com.NovaStack.biblioteca.dto.LibraryItem.MediaResponseDTO;
 import com.NovaStack.biblioteca.model.User;
-import com.NovaStack.biblioteca.model.libraryItem.Book;
 import com.NovaStack.biblioteca.model.libraryItem.Magazine;
+import com.NovaStack.biblioteca.model.libraryItem.Media;
 import com.NovaStack.biblioteca.repository.LibraryItemRepository;
 import com.NovaStack.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class MagazineService {
+public class MediaService {
 
     @Autowired
     LibraryItemRepository libraryItemRepository;
@@ -25,31 +25,33 @@ public class MagazineService {
     UserRepository userRepository;
 
 
-    public MagazineResponseDTO createMagazine(MagazineRequestDTO requestDTO) throws RuntimeException{
+    public MediaResponseDTO createMedia(MediaRequestDTO requestDTO) throws RuntimeException{
         User user = this.getUser();
 
-        Magazine magazine = new Magazine(
+        Media media = new Media(
                 requestDTO.name(),
                 requestDTO.author(),
                 requestDTO.releaseDate(),
                 user,
-                requestDTO.editionNumber()
+                requestDTO.mediaFormat(),
+                requestDTO.durationTime()
         );
-        libraryItemRepository.save(magazine);
+        libraryItemRepository.save(media);
 
-        return this.convertToResponse(magazine);
+        return this.convertToResponse(media);
     }
 
 
 
-    private MagazineResponseDTO convertToResponse(Magazine magazine){
-        MagazineResponseDTO responseDTO = new MagazineResponseDTO(
-                magazine.getId(),
-                magazine.getName(),
-                magazine.getAuthor(),
-                magazine.getReleaseDate(),
-                magazine.isBorrowed(),
-                magazine.getEditionNumber()
+    private MediaResponseDTO convertToResponse(Media media){
+        MediaResponseDTO responseDTO = new MediaResponseDTO(
+                media.getId(),
+                media.getName(),
+                media.getAuthor(),
+                media.getReleaseDate(),
+                media.isBorrowed(),
+                media.getMediaFormat(),
+                media.getDurationTime()
         );
 
         return responseDTO;
