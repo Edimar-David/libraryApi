@@ -18,10 +18,14 @@ public class User {
     String email;
     @Column(nullable = false)
     String password;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<LibraryItem> libraryItems;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Client> clients;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Loan> loan;
 
 
 

@@ -1,9 +1,11 @@
 package com.NovaStack.biblioteca.model.libraryItem;
 
+import com.NovaStack.biblioteca.model.Loan;
 import com.NovaStack.biblioteca.model.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static jakarta.persistence.InheritanceType.JOINED;
 
@@ -23,6 +25,9 @@ public class LibraryItem {
     private LocalDate releaseDate;
 
     private boolean isBorrowed;
+
+    @OneToMany(mappedBy = "libraryItem", fetch = FetchType.LAZY)
+    private List<Loan> loan;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

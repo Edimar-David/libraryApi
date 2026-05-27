@@ -4,27 +4,29 @@ import com.NovaStack.biblioteca.dto.client.ClientRequestDTO;
 import com.NovaStack.biblioteca.model.enums.TypeClient;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     @Column(nullable = false)
     private String name;
-
+    @Column(nullable = false)
+    private String acessCode;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeClient typeClient;
-
     private int reserveLimit;
-
-    @Column(nullable = false)
-    private String acessCode;
+    private boolean isBanned;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private List<Loan> loan;
+
 
     public Client(ClientRequestDTO requestDTO, User user) {
         this.name = requestDTO.name();
@@ -87,5 +89,21 @@ public class Client {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
+    }
+
+    public List<Loan> getLoan() {
+        return loan;
+    }
+
+    public void setLoan(List<Loan> loan) {
+        this.loan = loan;
     }
 }
