@@ -1,5 +1,6 @@
 package com.NovaStack.biblioteca.model;
 
+import com.NovaStack.biblioteca.model.enums.LoanStatus;
 import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import jakarta.persistence.*;
 
@@ -12,12 +13,11 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
     LocalDate loanDate;
     @Column(nullable = false)
     LocalDate dueDate;
     LocalDate returnDate;
+    LoanStatus loanStatus;
 
     @ManyToOne
     @JoinColumn(name = "library_item_id", nullable = false)
@@ -30,11 +30,11 @@ public class Loan {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Loan(String name, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, LibraryItem libraryItem, Client client, User user) {
-        this.name = name;
+
+    public Loan(LocalDate loanDate, LocalDate dueDate, LoanStatus loanStatus, LibraryItem libraryItem, Client client, User user) {
         this.loanDate = loanDate;
         this.dueDate = dueDate;
-        this.returnDate = returnDate;
+        this.loanStatus = loanStatus;
         this.libraryItem = libraryItem;
         this.client = client;
         this.user = user;
@@ -49,14 +49,6 @@ public class Loan {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public LocalDate getLoanDate() {
@@ -81,5 +73,37 @@ public class Loan {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public LoanStatus getLoanStatus() {
+        return loanStatus;
+    }
+
+    public void setLoanStatus(LoanStatus loanStatus) {
+        this.loanStatus = loanStatus;
+    }
+
+    public LibraryItem getLibraryItem() {
+        return libraryItem;
+    }
+
+    public void setLibraryItem(LibraryItem libraryItem) {
+        this.libraryItem = libraryItem;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
