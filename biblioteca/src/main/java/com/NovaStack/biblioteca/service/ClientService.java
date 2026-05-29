@@ -4,6 +4,7 @@ import com.NovaStack.biblioteca.dto.client.ClientRequestDTO;
 import com.NovaStack.biblioteca.dto.client.ClientResponseDTO;
 import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.User;
+import com.NovaStack.biblioteca.model.enums.TypeClient;
 import com.NovaStack.biblioteca.repository.ClientRepository;
 import com.NovaStack.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,20 @@ public class ClientService {
         ClientResponseDTO response = this.convertToResponse(client);
         return response;
     }
+
+    public ClientResponseDTO update(Long id, ClientRequestDTO dto) {
+        User user = this.getUser();
+        Client client = clientRepository.findByIdAndUser(id, user);
+
+        client.setName(dto.name());
+        client.setTypeClient(TypeClient.fromString(dto.typeClient()));
+        client.setAcessCode(dto.acessCode());
+
+        clientRepository.save(client);
+       ClientResponseDTO response = this.convertToResponse(client);
+        return response;
+    }
+
 
     private ClientResponseDTO convertToResponse(Client client) {
         ClientResponseDTO responseDTO = new ClientResponseDTO(
