@@ -82,6 +82,11 @@ public class ClientService {
 
         return responseDTO;
     }
+    public void delete(Long id) {
+        User user = this.getUser();
+        Client client = clientRepository.findByIdAndUser(id, user);
+        clientRepository.delete(client);
+    }
 
     private User getUser() throws RuntimeException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -97,4 +102,5 @@ public class ClientService {
             throw new RuntimeException("User not found");
         }
     }
+
 }
