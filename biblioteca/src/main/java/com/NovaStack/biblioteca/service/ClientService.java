@@ -49,6 +49,14 @@ public class ClientService {
         return response;
     }
 
+
+    public ClientResponseDTO getClientById(Long id) {
+        User user = this.getUser();
+        Client client = clientRepository.findByIdAndUser(id, user);
+        ClientResponseDTO response = this.convertToResponse(client);
+        return response;
+    }
+
     private ClientResponseDTO convertToResponse(Client client) {
         ClientResponseDTO responseDTO = new ClientResponseDTO(
                 client.getId(),

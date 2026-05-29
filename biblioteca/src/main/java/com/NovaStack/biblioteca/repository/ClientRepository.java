@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByUser(User user);
+
+    Client findByIdAndUser(Long id, User user);
 }

@@ -30,10 +30,10 @@ public class ClientController {
         return ResponseEntity.ok().body(response);
     }
 
-//    @GetMapping("/${id}")
-//    public ResponseEntity<?> getClientById(@PathVariable Long id){
-//
-//        ClientResponseDTO response = service.getClientById(id);
-//        return ResponseEntity.ok().body(response);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getClientById(@PathVariable Long id){
+
+        ClientResponseDTO response = service.getClientById(id);
+        return ResponseEntity.ok().body(response);
+    }
 }
