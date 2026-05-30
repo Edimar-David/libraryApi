@@ -14,7 +14,7 @@ public class Client {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private String acessCode;
+    private String accessCode;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeClient typeClient;
@@ -31,12 +31,7 @@ public class Client {
     public Client(ClientRequestDTO requestDTO, User user) {
         this.name = requestDTO.name();
         this.typeClient = TypeClient.fromString(requestDTO.typeClient());
-        if(typeClient == TypeClient.SPECIAL){
-            this.reserveLimit = 2;
-        }else{
-            this.reserveLimit = 1;
-        }
-        this.acessCode = requestDTO.acessCode();
+        this.accessCode = requestDTO.accessCode();
         this.user = user;
     }
 
@@ -65,6 +60,12 @@ public class Client {
 
     public void setTypeClient(TypeClient typeClient) {
         this.typeClient = typeClient;
+
+        if(typeClient == TypeClient.SPECIAL){
+            this.reserveLimit = 2;
+        }else{
+            this.reserveLimit = 1;
+        }
     }
 
     public int getReserveLimit() {
@@ -75,12 +76,12 @@ public class Client {
         this.reserveLimit = reserveLimit;
     }
 
-    public String getAcessCode() {
-        return acessCode;
+    public String getAccessCode() {
+        return accessCode;
     }
 
-    public void setAcessCode(String acessCode) {
-        this.acessCode = acessCode;
+    public void setAccessCode(String acessCode) {
+        this.accessCode = acessCode;
     }
 
     public User getUser() {

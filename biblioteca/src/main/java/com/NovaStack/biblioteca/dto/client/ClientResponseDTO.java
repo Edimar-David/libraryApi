@@ -6,6 +6,7 @@ public record ClientResponseDTO(
     Long id,
     String name,
     TypeClient typeClient,
-    int limit
+    int limit,
+    String accessCode
 ) {
 }

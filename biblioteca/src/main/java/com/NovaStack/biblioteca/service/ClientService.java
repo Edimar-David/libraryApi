@@ -43,7 +43,8 @@ public class ClientService {
                         client.getId(),
                         client.getName(),
                         client.getTypeClient(),
-                        client.getReserveLimit()
+                        client.getReserveLimit(),
+                        client.getAccessCode()
                 ))
                 .collect(Collectors.toList());
 
@@ -64,7 +65,7 @@ public class ClientService {
 
         client.setName(dto.name());
         client.setTypeClient(TypeClient.fromString(dto.typeClient()));
-        client.setAcessCode(dto.acessCode());
+        client.setAccessCode(dto.accessCode());
 
         clientRepository.save(client);
        ClientResponseDTO response = this.convertToResponse(client);
@@ -77,7 +78,8 @@ public class ClientService {
                 client.getId(),
                 client.getName(),
                 client.getTypeClient(),
-                client.getReserveLimit()
+                client.getReserveLimit(),
+                client.getAccessCode()
         );
 
         return responseDTO;
