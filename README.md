@@ -19,8 +19,6 @@ O projeto foi inicialmente criado como um trabalho acadêmico e atualmente está
 - Gerenciamento de catálogo
 - Gerenciamento de clientes
 - Controle de empréstimos
-- Sistema de reservas
-- Sistema de multas baseado em atraso
 
 ## Gerenciamento de Itens
 O sistema suporta múltiplos tipos de itens utilizando herança e abstração.
@@ -34,8 +32,6 @@ Tipos suportados:
 ## Regras de Negócio
 - Clientes comuns podem realizar até 1 empréstimo
 - Clientes especiais podem realizar até 2 empréstimos
-- Controle de disponibilidade de itens
-- Controle de status de empréstimos e reservas
 
 ---
 
@@ -68,7 +64,7 @@ Principais camadas:
 - Controllers → gerenciamento das requisições HTTP
 - Services → regras de negócio
 - Repositories → acesso ao banco de dados
-- Entities → modelagem de domínio
+- Models → modelagem de domínio
 - Security → autenticação e autorização com JWT
 
 ---
@@ -106,7 +102,6 @@ Essa abordagem facilita a extensibilidade e organização do domínio.
 Cada conta de biblioteca possui gerenciamento próprio de:
 - Clientes
 - Empréstimos
-- Reservas
 - Catálogo
 
 O isolamento de dados é realizado através do relacionamento com o usuário autenticado.
@@ -120,8 +115,8 @@ src/main/java
 ├── controller
 ├── service
 ├── repository
-├── entity
-├── security
+├── model
+├── infra
 ├── config
 └── dto
 ```
@@ -183,15 +178,7 @@ DELETE /api/items/{id}
 
 ```http
 POST /api/loans
-PUT  /api/loans/{id}/return
 ```
-
-## Reservas
-
-```http
-POST /api/reservations
-```
-
 ---
 
 # Limitações Atuais
