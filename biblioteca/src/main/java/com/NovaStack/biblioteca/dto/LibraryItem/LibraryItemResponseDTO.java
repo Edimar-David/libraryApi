@@ -7,6 +7,7 @@ public record LibraryItemResponseDTO(
         String name,
         String author,
         LocalDate releaseDate,
-        Boolean isBorrowed
+        Boolean isBorrowed,
+        String typeItem
 ) {
 }

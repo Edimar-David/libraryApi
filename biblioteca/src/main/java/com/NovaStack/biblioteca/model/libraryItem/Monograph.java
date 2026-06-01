@@ -21,6 +21,12 @@ public class Monograph extends LibraryItem{
 
     public Monograph() {
     }
+
+    @Override
+    public String getType() {
+        return "monograph";
+    }
+
     public String getInstitution() {
         return institution;
     }

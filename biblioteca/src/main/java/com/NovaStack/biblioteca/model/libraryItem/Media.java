@@ -26,6 +26,12 @@ public class Media extends LibraryItem {
         return mediaFormat;
     }
 
+    @Override
+    public String getType() {
+        return "media";
+    }
+
+
     public void setMediaFormat(String mediaFormat) {
         this.mediaFormat = mediaFormat;
     }

@@ -23,6 +23,13 @@ public class Book extends LibraryItem{
 
     }
 
+
+    @Override
+    public String getType() {
+        return "book";
+    }
+
+
     public BookCategory getCategory() {
         return category;
     }

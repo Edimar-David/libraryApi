@@ -19,6 +19,11 @@ public class Magazine extends LibraryItem{
     public Magazine() {
     }
 
+    @Override
+    public String getType() {
+        return "magazine";
+    }
+
     public Integer getEditionNumber() {
         return editionNumber;
     }

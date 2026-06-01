@@ -45,6 +45,10 @@ public class LibraryItem {
     public LibraryItem() {
     }
 
+    public String getType(){
+        return "null";
+    }
+
     public Long getId() {
         return id;
     }

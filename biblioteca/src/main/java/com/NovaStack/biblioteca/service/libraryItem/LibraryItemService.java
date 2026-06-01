@@ -23,7 +23,8 @@ public class LibraryItemService {
                         item.getName(),
                         item.getAuthor(),
                         item.getReleaseDate(),
-                        item.isBorrowed()
+                        item.isBorrowed(),
+                        item.getType()
                 ))
                 .toList();
     }
