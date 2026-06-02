@@ -53,14 +53,14 @@ public class LoanService {
             throw new IllegalStateException("Cliente já possui um empréstimo ativo");
         }
 
-//            Loan loan = new Loan(
-//                    request.loanDate(),
-//                    request.dueDate(),
-//                    request.loanStatus(),
-//                    request.libraryItem(),
-//                    request.client(),
-//                    user
-//            );
+            Loan loan = new Loan(
+                    request.loanDate(),
+                    request.dueDate(),
+                    request.loanStatus(),
+                    item,
+                    client,
+                    user
+            );
 
         return null;
     }
