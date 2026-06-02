@@ -1,13 +1,20 @@
 package com.NovaStack.biblioteca.service;
 
+import com.NovaStack.biblioteca.dto.LibraryItem.LibraryItemResponseDTO;
 import com.NovaStack.biblioteca.dto.Loan.LoanRequestDTO;
 import com.NovaStack.biblioteca.dto.Loan.LoanResponseDTO;
+import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.Loan;
 import com.NovaStack.biblioteca.model.User;
+import com.NovaStack.biblioteca.model.enums.LoanStatus;
+import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
+import com.NovaStack.biblioteca.repository.ClientRepository;
+import com.NovaStack.biblioteca.repository.LibraryItemRepository;
 import com.NovaStack.biblioteca.repository.LoanRespository;
 import com.NovaStack.biblioteca.repository.UserRepository;
 import com.NovaStack.biblioteca.service.libraryItem.LibraryItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.Repository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,28 +26,41 @@ public class LoanService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    LoanRespository respository;
+    LoanRespository loanRespository;
 
     @Autowired
-    LibraryItemService itemService;
+    LibraryItemRepository itemRepository;
     @Autowired
-    ClientService clientService;
+    ClientRepository clientRepository;
 
     public LoanResponseDTO createLoan(LoanRequestDTO request) {
         User user = this.getUser();
+        LibraryItem item = itemRepository.findByIdAndUser(request.libraryItemID(), user);
+        Client client = clientRepository.findByIdAndUser(request.clientID(), user);
 
-        if(request.libraryItem().isBorrowed()) {
+        if(item.isBorrowed()) {
             throw new IllegalStateException("Item já está emprestado");
         }
 
-            Loan loan = new Loan(
-                    request.loanDate(),
-                    request.dueDate(),
-                    request.loanStatus(),
-                    request.libraryItem(),
-                    request.client(),
-                    user
-            );
+        boolean hasActiveLoan = loanRespository.existsByClientAndStatusOrClientAndStatus(
+                client,
+                LoanStatus.IN_PROGRESS,
+                client,
+                LoanStatus.OVERDUE
+        );
+
+        if (hasActiveLoan) {
+            throw new IllegalStateException("Cliente já possui um empréstimo ativo");
+        }
+
+//            Loan loan = new Loan(
+//                    request.loanDate(),
+//                    request.dueDate(),
+//                    request.loanStatus(),
+//                    request.libraryItem(),
+//                    request.client(),
+//                    user
+//            );
 
         return null;
     }

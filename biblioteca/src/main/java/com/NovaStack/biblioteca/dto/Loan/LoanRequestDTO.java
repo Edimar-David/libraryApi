@@ -12,7 +12,7 @@ public record LoanRequestDTO(
         LocalDate loanDate,
         LocalDate dueDate,
         LoanStatus loanStatus,
-        LibraryItem libraryItem,
-        Client client
+        Long libraryItemID,
+        Long clientID
 ){}
 
