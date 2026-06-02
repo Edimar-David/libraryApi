@@ -2,19 +2,16 @@ package com.NovaStack.biblioteca.service;
 
 import com.NovaStack.biblioteca.dto.Loan.LoanRequestDTO;
 import com.NovaStack.biblioteca.dto.Loan.LoanResponseDTO;
-import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.Loan;
 import com.NovaStack.biblioteca.model.User;
-import com.NovaStack.biblioteca.model.enums.LoanStatus;
-import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import com.NovaStack.biblioteca.repository.LoanRespository;
 import com.NovaStack.biblioteca.repository.UserRepository;
+import com.NovaStack.biblioteca.service.libraryItem.LibraryItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -24,16 +21,26 @@ public class LoanService {
     @Autowired
     LoanRespository respository;
 
+    @Autowired
+    LibraryItemService itemService;
+    @Autowired
+    ClientService clientService;
+
     public LoanResponseDTO createLoan(LoanRequestDTO request) {
         User user = this.getUser();
-        Loan loan = new Loan(
-                request.loanDate(),
-                request.dueDate(),
-                request.loanStatus(),
-                request.libraryItem(),
-                request.client(),
-                user
-        );
+
+        if(request.libraryItem().isBorrowed()) {
+            throw new IllegalStateException("Item já está emprestado");
+        }
+
+            Loan loan = new Loan(
+                    request.loanDate(),
+                    request.dueDate(),
+                    request.loanStatus(),
+                    request.libraryItem(),
+                    request.client(),
+                    user
+            );
 
         return null;
     }

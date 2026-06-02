@@ -11,13 +11,7 @@ import java.util.List;
 
 @Repository
 public interface LibraryItemRepository extends JpaRepository<LibraryItem, Long> {
-    List<BookResponseDTO> findByUser(User user);
+    List<LibraryItem> findByUser(User user);
 
-    @Query("""
-            Select b from LibraryItem b
-            where 
-            b.id = :id AND
-            b.user = :user
-            """)
-    LibraryItem findBook(Long id, User user);
+    LibraryItem findByIdAndUser(Long id, User user);
 }
