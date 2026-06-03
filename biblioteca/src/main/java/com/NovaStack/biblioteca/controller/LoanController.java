@@ -22,6 +22,7 @@ public class LoanController {
         return ResponseEntity.ok().body(response);
     }
 //    get
+
 //    getbyid
 //    transform
 

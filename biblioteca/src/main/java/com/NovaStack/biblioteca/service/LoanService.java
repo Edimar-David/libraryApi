@@ -74,7 +74,21 @@ public class LoanService {
         item.setBorrowed(true);
         itemRepository.save(item);
 
-        return null;
+        return this.convertToResponse(loan);
+    }
+
+    private LoanResponseDTO convertToResponse(Loan loan){
+        LoanResponseDTO response = new LoanResponseDTO(
+                loan.getId(),
+                loan.getLoanDate(),
+                loan.getDueDate(),
+                loan.getReturnDate(),
+                loan.getLoanStatus(),
+                loan.getLibraryItem().getName(),
+                loan.getClient().getName()
+        );
+
+        return response;
     }
 
 
