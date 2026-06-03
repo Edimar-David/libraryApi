@@ -7,6 +7,7 @@ public record ClientResponseDTO(
     String name,
     TypeClient typeClient,
     int limit,
-    String accessCode
+    String accessCode,
+    Boolean isBanned
 ) {
 }

@@ -30,7 +30,7 @@ public class Client {
 
     public Client(ClientRequestDTO requestDTO, User user) {
         this.name = requestDTO.name();
-        this.typeClient = TypeClient.fromString(requestDTO.typeClient());
+        this.setTypeClient(TypeClient.fromString(requestDTO.typeClient()));
         this.accessCode = requestDTO.accessCode();
         this.user = user;
     }
@@ -66,6 +66,7 @@ public class Client {
         }else{
             this.reserveLimit = 1;
         }
+
     }
 
     public int getReserveLimit() {
