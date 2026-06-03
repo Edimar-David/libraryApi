@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoanRespository extends JpaRepository<Loan, Long>{
-    boolean existsByClientAndStatusOrClientAndStatus(Client client, LoanStatus loanStatus, Client client1, LoanStatus loanStatus1);
+    boolean existsByClientAndLoanStatusOrClientAndLoanStatus(Client client, LoanStatus loanStatus, Client client1, LoanStatus loanStatus1);
 }

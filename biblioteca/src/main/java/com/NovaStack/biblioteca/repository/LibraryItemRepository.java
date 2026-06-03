@@ -14,4 +14,6 @@ public interface LibraryItemRepository extends JpaRepository<LibraryItem, Long> 
     List<LibraryItem> findByUser(User user);
 
     LibraryItem findByIdAndUser(Long id, User user);
+
+    List<LibraryItem> findByUserAndIsBorrowed(User user, boolean isBorrowed);
 }

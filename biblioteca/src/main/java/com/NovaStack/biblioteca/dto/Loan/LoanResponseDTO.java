@@ -12,7 +12,8 @@ public record LoanResponseDTO(
         LocalDate dueDate,
         LocalDate returnDate,
         LoanStatus loanStatus,
-        LibraryItem libraryItem,
-        Client client
+        String libraryItemName,
+        String clientName
 ) {
+
 }

@@ -39,10 +39,10 @@ public class LoanService {
         Client client = clientRepository.findByIdAndUser(request.clientID(), user);
 
         if(item.isBorrowed()) {
-            throw new IllegalStateException("Item já está emprestado");
+            throw new IllegalStateException("Item já está em emprestimo");
         }
 
-        boolean hasActiveLoan = loanRespository.existsByClientAndStatusOrClientAndStatus(
+        boolean hasActiveLoan = loanRespository.existsByClientAndLoanStatusOrClientAndLoanStatus(
                 client,
                 LoanStatus.IN_PROGRESS,
                 client,
@@ -53,6 +53,7 @@ public class LoanService {
             throw new IllegalStateException("Cliente já possui um empréstimo ativo");
         }
 
+
             Loan loan = new Loan(
                     request.loanDate(),
                     request.dueDate(),
@@ -61,6 +62,9 @@ public class LoanService {
                     client,
                     user
             );
+
+        item.setBorrowed(true);
+        itemRepository.save(item);
 
         return null;
     }

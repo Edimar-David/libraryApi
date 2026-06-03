@@ -44,6 +44,12 @@ public class LibraryItemService {
         return this.convertToResponse(item);
     }
 
+    public List<LibraryItem> getItemsNotBorrewed() {
+        User user = this.getUser();
+        List<LibraryItem> libraryItems = repository.findByUserAndIsBorrowed(user, false);
+        return libraryItems;
+    }
+
     private LibraryItemResponseDTO convertToResponse(LibraryItem item){
         LibraryItemResponseDTO responseDTO = new LibraryItemResponseDTO(
                 item.getId(),

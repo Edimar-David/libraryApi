@@ -24,9 +24,15 @@ public class LibraryItemController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/notBorrowed")
+    public ResponseEntity<?> getItemsNotBorrewed(){
+        List<LibraryItem> response = service.getItemsNotBorrewed();
+        return ResponseEntity.ok().body(response);
+    }
+
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookById(@PathVariable Long id){
+    public ResponseEntity<?> getItemById(@PathVariable Long id){
         try {
             LibraryItemResponseDTO response = service.getItemById(id);
             return ResponseEntity.ok().body(response);
