@@ -44,7 +44,8 @@ public class ClientService {
                         client.getName(),
                         client.getTypeClient(),
                         client.getReserveLimit(),
-                        client.getAccessCode()
+                        client.getAccessCode(),
+                        client.isBanned()
                 ))
                 .collect(Collectors.toList());
 
@@ -56,6 +57,23 @@ public class ClientService {
         User user = this.getUser();
         Client client = clientRepository.findByIdAndUser(id, user);
         ClientResponseDTO response = this.convertToResponse(client);
+        return response;
+    }
+
+    public List<ClientResponseDTO> getClientsNotBanned() {
+        User user = this.getUser();
+        List<Client> clients = clientRepository.findByUserAndIsBanned(user, false);
+        List<ClientResponseDTO> response = clients.stream()
+                .map(c -> new ClientResponseDTO(
+                        c.getId(),
+                        c.getName(),
+                        c.getTypeClient(),
+                        c.getReserveLimit(),
+                        c.getAccessCode(),
+                        c.isBanned()
+                        )
+                ).collect(Collectors.toList());
+
         return response;
     }
 
@@ -72,6 +90,11 @@ public class ClientService {
         return response;
     }
 
+    public void delete(Long id) {
+        User user = this.getUser();
+        Client client = clientRepository.findByIdAndUser(id, user);
+        clientRepository.delete(client);
+    }
 
     private ClientResponseDTO convertToResponse(Client client) {
         ClientResponseDTO responseDTO = new ClientResponseDTO(
@@ -79,15 +102,11 @@ public class ClientService {
                 client.getName(),
                 client.getTypeClient(),
                 client.getReserveLimit(),
-                client.getAccessCode()
+                client.getAccessCode(),
+                client.isBanned()
         );
 
         return responseDTO;
-    }
-    public void delete(Long id) {
-        User user = this.getUser();
-        Client client = clientRepository.findByIdAndUser(id, user);
-        clientRepository.delete(client);
     }
 
     private User getUser() throws RuntimeException {

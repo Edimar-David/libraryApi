@@ -13,4 +13,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByUser(User user);
 
     Client findByIdAndUser(Long id, User user);
+
+    List<Client> findByUserAndIsBanned(User user, boolean b);
 }

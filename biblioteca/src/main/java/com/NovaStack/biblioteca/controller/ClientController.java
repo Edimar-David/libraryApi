@@ -30,6 +30,12 @@ public class ClientController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/notBanned")
+    public ResponseEntity<?> getClientsNotBanned(){
+        List<ClientResponseDTO> response = service.getClientsNotBanned();
+        return ResponseEntity.ok().body(response);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getClientById(@PathVariable Long id){
 
