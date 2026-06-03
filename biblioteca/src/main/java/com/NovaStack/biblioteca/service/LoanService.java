@@ -32,8 +32,15 @@ public class LoanService {
 
     public LoanResponseDTO createLoan(LoanRequestDTO request) {
         User user = this.getUser();
-        LibraryItem item = itemRepository.findByIdAndUser(request.libraryitemid(), user);
-        Client client = clientRepository.findByIdAndUser(request.clientid(), user);
+
+        System.out.println("Item ID: " + request.libraryItemId());
+        System.out.println("User ID: " + user.getId());
+        System.out.println("client ID: " + request.clientId());
+
+        LibraryItem item = itemRepository.findByIdAndUser(request.libraryItemId(), user);
+        Client client = clientRepository.findByIdAndUser(request.clientId(), user);
+
+        System.out.println("client encontrado:" + client.getName());
 
         if(item.isBorrowed()) {
             throw new IllegalStateException("Item já está em emprestimo");
@@ -63,6 +70,7 @@ public class LoanService {
                     user
             );
 
+        loanRespository.save(loan);
         item.setBorrowed(true);
         itemRepository.save(item);
 
