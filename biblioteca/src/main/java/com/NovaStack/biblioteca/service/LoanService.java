@@ -16,7 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LoanService {
@@ -75,6 +77,24 @@ public class LoanService {
         itemRepository.save(item);
 
         return this.convertToResponse(loan);
+    }
+
+    public List<LoanResponseDTO> getAll(){
+        User user = this.getUser();
+        List<Loan> loans = loanRespository.findAllByUser(user);
+
+        List<LoanResponseDTO> response = loans.stream()
+                .map(l -> new LoanResponseDTO(
+                        l.getId(),
+                        l.getLoanDate(),
+                        l.getDueDate(),
+                        l.getReturnDate(),
+                        l.getLoanStatus(),
+                        l.getLibraryItem().getName(),
+                        l.getClient().getName()
+                )).collect(Collectors.toList());
+
+        return response;
     }
 
     private LoanResponseDTO convertToResponse(Loan loan){

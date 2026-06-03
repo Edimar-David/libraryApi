@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/loan")
 public class LoanController {
@@ -22,6 +24,13 @@ public class LoanController {
         return ResponseEntity.ok().body(response);
     }
 //    get
+    @GetMapping
+    public ResponseEntity<List<LoanResponseDTO>> getAll(){
+
+        List<LoanResponseDTO> response = service.getAll();
+
+        return ResponseEntity.ok().body(response);
+    }
 
 //    getbyid
 //    transform
