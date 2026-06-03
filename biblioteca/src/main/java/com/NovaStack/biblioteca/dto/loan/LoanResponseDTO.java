@@ -1,8 +1,6 @@
-package com.NovaStack.biblioteca.dto.Loan;
+package com.NovaStack.biblioteca.dto.loan;
 
-import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.enums.LoanStatus;
-import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 
 import java.time.LocalDate;
 

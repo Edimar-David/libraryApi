@@ -1,13 +1,11 @@
-package com.NovaStack.biblioteca.dto.LibraryItem;
+package com.NovaStack.biblioteca.dto.libraryitem;
 
 import java.time.LocalDate;
 
-public record MediaResponseDTO(
-        Long id,
+public record MediaRequestDTO(
         String name,
         String author,
         LocalDate releaseDate,
-        Boolean isBorrowed,
         String mediaFormat,
         Integer durationTime
 ) {

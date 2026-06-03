@@ -1,7 +1,7 @@
 package com.NovaStack.biblioteca.controller.LibraryItem;
 
 
-import com.NovaStack.biblioteca.dto.LibraryItem.LibraryItemResponseDTO;
+import com.NovaStack.biblioteca.dto.libraryitem.LibraryItemResponseDTO;
 import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import com.NovaStack.biblioteca.service.libraryItem.LibraryItemService;
 import org.springframework.beans.factory.annotation.Autowired;

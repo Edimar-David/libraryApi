@@ -1,4 +1,4 @@
-package com.NovaStack.biblioteca.dto.LibraryItem;
+package com.NovaStack.biblioteca.dto.libraryitem;
 
 import java.time.LocalDate;
 

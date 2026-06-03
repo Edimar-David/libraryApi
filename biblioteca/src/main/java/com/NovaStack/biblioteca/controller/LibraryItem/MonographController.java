@@ -1,12 +1,8 @@
 package com.NovaStack.biblioteca.controller.LibraryItem;
 
 
-import com.NovaStack.biblioteca.dto.LibraryItem.MagazineRequestDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MagazineResponseDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MonographRequestDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MonographResponseDTO;
-import com.NovaStack.biblioteca.model.libraryItem.Monograph;
-import com.NovaStack.biblioteca.service.libraryItem.MagazineService;
+import com.NovaStack.biblioteca.dto.libraryitem.MonographRequestDTO;
+import com.NovaStack.biblioteca.dto.libraryitem.MonographResponseDTO;
 import com.NovaStack.biblioteca.service.libraryItem.MonographService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

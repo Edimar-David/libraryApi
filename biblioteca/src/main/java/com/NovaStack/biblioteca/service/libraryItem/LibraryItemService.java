@@ -1,6 +1,6 @@
 package com.NovaStack.biblioteca.service.libraryItem;
 
-import com.NovaStack.biblioteca.dto.LibraryItem.LibraryItemResponseDTO;
+import com.NovaStack.biblioteca.dto.libraryitem.LibraryItemResponseDTO;
 import com.NovaStack.biblioteca.model.User;
 import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import com.NovaStack.biblioteca.repository.LibraryItemRepository;

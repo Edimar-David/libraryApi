@@ -1,11 +1,8 @@
 package com.NovaStack.biblioteca.controller.LibraryItem;
 
 
-import com.NovaStack.biblioteca.dto.LibraryItem.MagazineRequestDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MagazineResponseDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MediaRequestDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MediaResponseDTO;
-import com.NovaStack.biblioteca.service.libraryItem.MagazineService;
+import com.NovaStack.biblioteca.dto.libraryitem.MediaRequestDTO;
+import com.NovaStack.biblioteca.dto.libraryitem.MediaResponseDTO;
 import com.NovaStack.biblioteca.service.libraryItem.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

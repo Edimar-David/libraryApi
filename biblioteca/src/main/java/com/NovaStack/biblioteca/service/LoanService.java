@@ -1,8 +1,7 @@
 package com.NovaStack.biblioteca.service;
 
-import com.NovaStack.biblioteca.dto.LibraryItem.LibraryItemResponseDTO;
-import com.NovaStack.biblioteca.dto.Loan.LoanRequestDTO;
-import com.NovaStack.biblioteca.dto.Loan.LoanResponseDTO;
+import com.NovaStack.biblioteca.dto.loan.LoanRequestDTO;
+import com.NovaStack.biblioteca.dto.loan.LoanResponseDTO;
 import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.Loan;
 import com.NovaStack.biblioteca.model.User;
@@ -12,9 +11,7 @@ import com.NovaStack.biblioteca.repository.ClientRepository;
 import com.NovaStack.biblioteca.repository.LibraryItemRepository;
 import com.NovaStack.biblioteca.repository.LoanRespository;
 import com.NovaStack.biblioteca.repository.UserRepository;
-import com.NovaStack.biblioteca.service.libraryItem.LibraryItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.Repository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,8 +32,8 @@ public class LoanService {
 
     public LoanResponseDTO createLoan(LoanRequestDTO request) {
         User user = this.getUser();
-        LibraryItem item = itemRepository.findByIdAndUser(request.libraryItemID(), user);
-        Client client = clientRepository.findByIdAndUser(request.clientID(), user);
+        LibraryItem item = itemRepository.findByIdAndUser(request.libraryitemid(), user);
+        Client client = clientRepository.findByIdAndUser(request.clientid(), user);
 
         if(item.isBorrowed()) {
             throw new IllegalStateException("Item já está em emprestimo");
@@ -53,6 +50,9 @@ public class LoanService {
             throw new IllegalStateException("Cliente já possui um empréstimo ativo");
         }
 
+        if(client.isBanned()){
+            throw new IllegalStateException("cliente banido");
+        }
 
             Loan loan = new Loan(
                     request.loanDate(),

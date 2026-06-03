@@ -1,11 +1,8 @@
 package com.NovaStack.biblioteca.service.libraryItem;
 
-import com.NovaStack.biblioteca.dto.LibraryItem.MagazineRequestDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MagazineResponseDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MonographRequestDTO;
-import com.NovaStack.biblioteca.dto.LibraryItem.MonographResponseDTO;
+import com.NovaStack.biblioteca.dto.libraryitem.MonographRequestDTO;
+import com.NovaStack.biblioteca.dto.libraryitem.MonographResponseDTO;
 import com.NovaStack.biblioteca.model.User;
-import com.NovaStack.biblioteca.model.libraryItem.Magazine;
 import com.NovaStack.biblioteca.model.libraryItem.Monograph;
 import com.NovaStack.biblioteca.repository.LibraryItemRepository;
 import com.NovaStack.biblioteca.repository.UserRepository;
