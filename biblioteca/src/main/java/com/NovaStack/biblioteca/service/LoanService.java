@@ -3,6 +3,7 @@ package com.NovaStack.biblioteca.service;
 import com.NovaStack.biblioteca.dto.loan.LoanRequestDTO;
 import com.NovaStack.biblioteca.dto.loan.LoanResponseDTO;
 import com.NovaStack.biblioteca.infra.exception.BusinessException;
+import com.NovaStack.biblioteca.infra.exception.ResourceNotFoundException;
 import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.Loan;
 import com.NovaStack.biblioteca.model.User;
@@ -36,18 +37,22 @@ public class LoanService {
     public LoanResponseDTO createLoan(LoanRequestDTO request) {
         User user = this.getUser();
 
-        System.out.println("Item ID: " + request.libraryItemId());
-        System.out.println("User ID: " + user.getId());
-        System.out.println("client ID: " + request.clientId());
-
         LibraryItem item = itemRepository.findByIdAndUser(request.libraryItemId(), user);
-        Client client = clientRepository.findByIdAndUser(request.clientId(), user);
-
-        System.out.println("client encontrado:" + client.getName());
-
+        if (item == null){
+            throw new ResourceNotFoundException("item not found");
+        }
         if(item.isBorrowed()){
             throw new BusinessException("Item já está em emprestimo");
         }
+
+        Client client = clientRepository.findByIdAndUser(request.clientId(), user);
+        if (client == null){
+            throw new ResourceNotFoundException("client not found");
+        }
+        if(client.isBanned()){
+            throw new BusinessException("cliente banido");
+        }
+
 
         boolean hasActiveLoan = loanRespository.existsByClientAndLoanStatusOrClientAndLoanStatus(
                 client,
@@ -55,23 +60,19 @@ public class LoanService {
                 client,
                 LoanStatus.OVERDUE
         );
-
         if (hasActiveLoan) {
             throw new BusinessException("Cliente já possui um empréstimo ativo");
         }
 
-        if(client.isBanned()){
-            throw new BusinessException("cliente banido");
-        }
 
-            Loan loan = new Loan(
-                    request.loanDate(),
-                    request.dueDate(),
-                    request.loanStatus(),
-                    item,
-                    client,
-                    user
-            );
+        Loan loan = new Loan(
+                request.loanDate(),
+                request.dueDate(),
+                request.loanStatus(),
+                item,
+                client,
+                user
+        );
 
         loanRespository.save(loan);
         item.setBorrowed(true);
@@ -124,7 +125,7 @@ public class LoanService {
         if(user.isPresent()){
             return user.get();
         }else {
-            throw new RuntimeException("User not found");
+            throw new ResourceNotFoundException("User not found");
         }
     }
 }
