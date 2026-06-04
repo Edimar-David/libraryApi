@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class GlobalException {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ResponseError> catchResourceNotFoundException(IllegalStateException ex){
+    public ResponseEntity<ResponseError> catchResourceNotFoundException(ResourceNotFoundException ex){
         System.out.println(ex.getMessage());
         ResponseError response = new ResponseError(
                 ex.getMessage(),
@@ -22,7 +22,7 @@ public class GlobalException {
     }
 
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ResponseError> catchBusinessException(IllegalStateException ex){
+    public ResponseEntity<ResponseError> catchBusinessException(BusinessException ex){
         System.out.println(ex.getMessage());
         ResponseError response = new ResponseError(
                 ex.getMessage(),
