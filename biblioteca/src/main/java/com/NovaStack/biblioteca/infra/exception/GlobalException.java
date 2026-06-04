@@ -10,16 +10,16 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalException {
 
-//    @ExceptionHandler(ResourceNotFoundException.class)
-//    public ResponseEntity<ResponseError> catchResourceNotFoundException(IllegalStateException ex){
-//        System.out.println(ex.getMessage());
-//        ResponseError response = new ResponseError(
-//                ex.getMessage(),
-//                HttpStatus.NOT_FOUND,
-//                LocalDateTime.now()
-//        );
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-//    }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ResponseError> catchResourceNotFoundException(IllegalStateException ex){
+        System.out.println(ex.getMessage());
+        ResponseError response = new ResponseError(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ResponseError> catchBusinessException(IllegalStateException ex){
