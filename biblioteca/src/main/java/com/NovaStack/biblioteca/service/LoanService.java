@@ -37,6 +37,10 @@ public class LoanService {
     public LoanResponseDTO createLoan(LoanRequestDTO request) {
         User user = this.getUser();
 
+        if (request.loanDate().isAfter(request.dueDate())){
+            throw new BusinessException("A data de devolução não pode ser anterior à data do empréstimo");
+        }
+
         LibraryItem item = itemRepository.findByIdAndUser(request.libraryItemId(), user);
         if (item == null){
             throw new ResourceNotFoundException("item not found");
