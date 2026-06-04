@@ -2,6 +2,7 @@ package com.NovaStack.biblioteca.service;
 
 import com.NovaStack.biblioteca.dto.loan.LoanRequestDTO;
 import com.NovaStack.biblioteca.dto.loan.LoanResponseDTO;
+import com.NovaStack.biblioteca.infra.exception.BusinessException;
 import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.Loan;
 import com.NovaStack.biblioteca.model.User;
@@ -44,8 +45,8 @@ public class LoanService {
 
         System.out.println("client encontrado:" + client.getName());
 
-        if(item.isBorrowed()) {
-            throw new IllegalStateException("Item já está em emprestimo");
+        if(item.isBorrowed()){
+            throw new BusinessException("Item já está em emprestimo");
         }
 
         boolean hasActiveLoan = loanRespository.existsByClientAndLoanStatusOrClientAndLoanStatus(
@@ -56,11 +57,11 @@ public class LoanService {
         );
 
         if (hasActiveLoan) {
-            throw new IllegalStateException("Cliente já possui um empréstimo ativo");
+            throw new BusinessException("Cliente já possui um empréstimo ativo");
         }
 
         if(client.isBanned()){
-            throw new IllegalStateException("cliente banido");
+            throw new BusinessException("cliente banido");
         }
 
             Loan loan = new Loan(
