@@ -11,7 +11,7 @@ import com.NovaStack.biblioteca.model.enums.LoanStatus;
 import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import com.NovaStack.biblioteca.repository.ClientRepository;
 import com.NovaStack.biblioteca.repository.LibraryItemRepository;
-import com.NovaStack.biblioteca.repository.LoanRespository;
+import com.NovaStack.biblioteca.repository.LoanRepository;
 import com.NovaStack.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,7 +27,7 @@ public class LoanService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    LoanRespository loanRespository;
+    LoanRepository loanRepository;
 
     @Autowired
     LibraryItemRepository itemRepository;
@@ -54,7 +54,7 @@ public class LoanService {
         }
 
 
-        boolean hasActiveLoan = loanRespository.existsByClientAndLoanStatusOrClientAndLoanStatus(
+        boolean hasActiveLoan = loanRepository.existsByClientAndLoanStatusOrClientAndLoanStatus(
                 client,
                 LoanStatus.IN_PROGRESS,
                 client,
@@ -74,7 +74,7 @@ public class LoanService {
                 user
         );
 
-        loanRespository.save(loan);
+        loanRepository.save(loan);
         item.setBorrowed(true);
         itemRepository.save(item);
 
@@ -83,7 +83,7 @@ public class LoanService {
 
     public List<LoanResponseDTO> getAll(){
         User user = this.getUser();
-        List<Loan> loans = loanRespository.findAllByUser(user);
+        List<Loan> loans = loanRepository.findAllByUser(user);
 
         List<LoanResponseDTO> response = loans.stream()
                 .map(l -> new LoanResponseDTO(

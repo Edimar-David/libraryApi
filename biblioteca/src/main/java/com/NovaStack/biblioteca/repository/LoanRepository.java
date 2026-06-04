@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LoanRespository extends JpaRepository<Loan, Long>{
+public interface LoanRepository extends JpaRepository<Loan, Long>{
     boolean existsByClientAndLoanStatusOrClientAndLoanStatus(Client client, LoanStatus loanStatus, Client client1, LoanStatus loanStatus1);
 
     List<Loan> findAllByUser(User user);
