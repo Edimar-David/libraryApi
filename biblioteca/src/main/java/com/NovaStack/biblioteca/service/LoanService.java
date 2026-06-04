@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,7 +89,7 @@ public class LoanService {
     public List<LoanResponseDTO> getAll(){
         User user = this.getUser();
         List<Loan> loans = loanRepository.findAllByUser(user);
-
+        this.updateOverdueLoanStatus(loans);
         List<LoanResponseDTO> response = loans.stream()
                 .map(l -> new LoanResponseDTO(
                         l.getId(),
@@ -116,7 +117,6 @@ public class LoanService {
 
         return response;
     }
-
 
     private User getUser() throws RuntimeException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
