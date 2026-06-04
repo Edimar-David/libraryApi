@@ -23,7 +23,7 @@ O projeto foi inicialmente criado como um trabalho acadêmico e atualmente está
 ## Gerenciamento de Itens
 O sistema suporta múltiplos tipos de itens utilizando herança e abstração.
 
-Tipos suportados:
+##### Tipos suportados:
 - Livros
 - Revistas
 - Mídias
@@ -66,6 +66,7 @@ Principais camadas:
 - Repositories → acesso ao banco de dados
 - Models → modelagem de domínio
 - Security → autenticação e autorização com JWT
+- exceptions -> padronização do tratamento de exções 
 
 ---
 
@@ -113,12 +114,14 @@ O isolamento de dados é realizado através do relacionamento com o usuário aut
 ```text
 src/main/java
 ├── controller
-├── service
-├── repository
-├── model
+├── dto
 ├── infra
-├── config
-└── dto
+|   ├── configuration
+|   ├── exception
+|   └── security
+├── model
+├── repository
+└── service
 ```
 
 ---
@@ -168,16 +171,17 @@ POST /auth/register
 ## Itens da Biblioteca
 
 ```http
-GET    /api/items
-POST   /api/items
-PUT    /api/items/{id}
-DELETE /api/items/{id}
+GET    /libraryItems/all
+GET    /libraryItems/notBorrowed
+GET    /libraryItems/{id}
+post    /{typeItem}/create
 ```
 
 ## Empréstimos
 
 ```http
-POST /api/loans
+POST /loan
+GET /loan
 ```
 ---
 
