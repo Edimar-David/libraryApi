@@ -58,6 +58,14 @@ public class LoanService {
             throw new BusinessException("cliente banido");
         }
 
+        if(request.loanStatus().equals(LoanStatus.IN_PROGRESS)) {
+            if (request.returnDate() == null) {
+                throw new BusinessException("emprestimos finalizados precisam de uma data de retorno");
+            }else if(request.returnDate().isBefore(request.loanDate())){
+                throw new BusinessException("A data de retorno deve ser superior a data de criação");
+            }
+        }
+
 
         boolean hasActiveLoan = loanRepository.existsByClientAndLoanStatusOrClientAndLoanStatus(
                 client,
@@ -102,6 +110,19 @@ public class LoanService {
                 )).collect(Collectors.toList());
 
         return response;
+    }
+
+    private List<Loan> updateOverdueLoanStatus(List<Loan> loans){
+        LocalDate date = LocalDate.now();
+        loans.stream()
+                .filter(l -> l.getLoanStatus().equals(LoanStatus.IN_PROGRESS))
+                .filter(l -> l.getDueDate().isBefore(date))
+                .forEach(l -> {
+                    l.setLoanStatus(LoanStatus.OVERDUE);
+                    this.loanRepository.save(l);
+                });
+
+        return loans;
     }
 
     private LoanResponseDTO convertToResponse(Loan loan){

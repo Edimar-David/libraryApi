@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public record LoanRequestDTO(
         LocalDate loanDate,
         LocalDate dueDate,
+        LocalDate returnDate,
         LoanStatus loanStatus,
         Long libraryItemId,
         Long clientId
