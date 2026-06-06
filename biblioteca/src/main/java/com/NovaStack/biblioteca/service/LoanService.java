@@ -58,7 +58,7 @@ public class LoanService {
             throw new BusinessException("cliente banido");
         }
 
-        if(request.loanStatus().equals(LoanStatus.IN_PROGRESS)) {
+        if(request.loanStatus().equals(LoanStatus.FINISHED)) {
             if (request.returnDate() == null) {
                 throw new BusinessException("emprestimos finalizados precisam de uma data de retorno");
             }else if(request.returnDate().isBefore(request.loanDate())){
