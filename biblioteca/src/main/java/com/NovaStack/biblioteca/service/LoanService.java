@@ -81,6 +81,7 @@ public class LoanService {
         Loan loan = new Loan(
                 request.loanDate(),
                 request.dueDate(),
+                request.returnDate(),
                 request.loanStatus(),
                 item,
                 client,

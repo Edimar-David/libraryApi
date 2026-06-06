@@ -31,9 +31,10 @@ public class Loan {
     private User user;
 
 
-    public Loan(LocalDate loanDate, LocalDate dueDate, LoanStatus loanStatus, LibraryItem libraryItem, Client client, User user) {
+    public Loan(LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, LoanStatus loanStatus, LibraryItem libraryItem, Client client, User user) {
         this.loanDate = loanDate;
         this.dueDate = dueDate;
+        this.returnDate = returnDate;
         this.loanStatus = loanStatus;
         this.libraryItem = libraryItem;
         this.client = client;
