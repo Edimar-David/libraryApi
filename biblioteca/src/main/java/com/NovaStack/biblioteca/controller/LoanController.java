@@ -1,5 +1,6 @@
 package com.NovaStack.biblioteca.controller;
 
+import com.NovaStack.biblioteca.dto.loan.ConcludeLoanDTO;
 import com.NovaStack.biblioteca.dto.loan.LoanRequestDTO;
 import com.NovaStack.biblioteca.dto.loan.LoanResponseDTO;
 import com.NovaStack.biblioteca.service.LoanService;
@@ -34,6 +35,12 @@ public class LoanController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<LoanResponseDTO> concludeLoan(@PathVariable Long id,@RequestBody ConcludeLoanDTO request){
+
+        LoanResponseDTO response = service.concludeLoan(id, request);
+        return ResponseEntity.ok(response);
+    }
 //    getbyid
 //    transform
 

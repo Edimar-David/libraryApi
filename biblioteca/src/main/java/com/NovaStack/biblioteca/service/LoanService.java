@@ -1,5 +1,6 @@
 package com.NovaStack.biblioteca.service;
 
+import com.NovaStack.biblioteca.dto.loan.ConcludeLoanDTO;
 import com.NovaStack.biblioteca.dto.loan.LoanRequestDTO;
 import com.NovaStack.biblioteca.dto.loan.LoanResponseDTO;
 import com.NovaStack.biblioteca.infra.exception.BusinessException;
@@ -124,6 +125,25 @@ public class LoanService {
                 });
 
         return loans;
+    }
+
+    public LoanResponseDTO concludeLoan(Long id, ConcludeLoanDTO request){
+        User user = this.getUser();
+        Loan loan = loanRepository.findByIdAndUser(id, user);
+
+        System.out.println("request returnDate:" + request.returnDate());
+        if (loan == null){
+            throw new ResourceNotFoundException("Empréstimo não encontrado");
+        }
+
+
+        loan.setLoanStatus(LoanStatus.FINISHED);
+        loan.setReturnDate(request.returnDate());
+
+        loanRepository.save(loan);
+
+
+        return this.convertToResponse(loan);
     }
 
     private LoanResponseDTO convertToResponse(Loan loan){
