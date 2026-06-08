@@ -150,6 +150,10 @@ public class LoanService {
         User user = this.getUser();
         Loan loan = loanRepository.findByIdAndUser(id, user);
 
+        LibraryItem item = itemRepository.findByIdAndUser(loan.getLibraryItem().getId(), user);
+        item.setBorrowed(false);
+        itemRepository.save(item);
+
         loanRepository.delete(loan);
         return "Empréstimo deletado";
     }
