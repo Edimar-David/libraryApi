@@ -145,6 +145,16 @@ public class LoanService {
         return this.convertToResponse(loan);
     }
 
+
+    public String deleteLoan(Long id) {
+        User user = this.getUser();
+        Loan loan = loanRepository.findByIdAndUser(id, user);
+
+        loanRepository.delete(loan);
+        return "Empréstimo deletado";
+    }
+
+
     private LoanResponseDTO convertToResponse(Loan loan){
         LoanResponseDTO response = new LoanResponseDTO(
                 loan.getId(),

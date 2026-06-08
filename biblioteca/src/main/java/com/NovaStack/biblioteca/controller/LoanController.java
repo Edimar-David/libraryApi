@@ -25,7 +25,6 @@ public class LoanController {
 
         return ResponseEntity.ok().body(response);
     }
-//    get
     @GetMapping
     public ResponseEntity<List<LoanResponseDTO>> getAll(){
 
@@ -41,8 +40,13 @@ public class LoanController {
         LoanResponseDTO response = service.concludeLoan(id, request);
         return ResponseEntity.ok(response);
     }
-//    getbyid
-//    transform
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLoan(@PathVariable Long id){
+        String response = service.deleteLoan(id);
+
+       return ResponseEntity.ok(response);
+    }
 
 
 }
