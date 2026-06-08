@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long>{
-    boolean existsByClientAndLoanStatusOrClientAndLoanStatus(Client client, LoanStatus loanStatus, Client client1, LoanStatus loanStatus1);
-
     List<Loan> findAllByUser(User user);
 
     Loan findByIdAndUser(Long id, User user);
+
+    Integer countByClientAndLoanStatusOrClientAndLoanStatus(Client client, LoanStatus loanStatus, Client client1, LoanStatus loanStatus1);
 }

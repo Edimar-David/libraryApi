@@ -59,6 +59,7 @@ public class LoanService {
             throw new BusinessException("cliente banido");
         }
 
+
         if(request.loanStatus().equals(LoanStatus.FINISHED)) {
             if (request.returnDate() == null) {
                 throw new BusinessException("emprestimos finalizados precisam de uma data de retorno");
@@ -67,17 +68,15 @@ public class LoanService {
             }
         }
 
-
-        boolean hasActiveLoan = loanRepository.existsByClientAndLoanStatusOrClientAndLoanStatus(
+        Integer activeLoanCount = loanRepository.countByClientAndLoanStatusOrClientAndLoanStatus(
                 client,
                 LoanStatus.IN_PROGRESS,
                 client,
-                LoanStatus.OVERDUE
-        );
-        if (hasActiveLoan) {
-            throw new BusinessException("Cliente já possui um empréstimo ativo");
-        }
+                LoanStatus.OVERDUE);
 
+        if (activeLoanCount >= client.getReserveLimit()) {
+            throw new BusinessException("Cliente já atingiu o limite máximo de empréstimos ativos.");
+        }
 
         Loan loan = new Loan(
                 request.loanDate(),
