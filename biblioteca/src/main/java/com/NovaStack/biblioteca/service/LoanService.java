@@ -48,7 +48,7 @@ public class LoanService {
             throw new ResourceNotFoundException("item not found");
         }
         if(item.isBorrowed()){
-            throw new BusinessException("Item já está em emprestimo");
+            throw new BusinessException("Item já está em empréstimo");
         }
 
         Client client = clientRepository.findByIdAndUser(request.clientId(), user);
@@ -56,15 +56,15 @@ public class LoanService {
             throw new ResourceNotFoundException("client not found");
         }
         if(client.isBanned()){
-            throw new BusinessException("cliente banido");
+            throw new BusinessException("Cliente esta banido");
         }
 
 
         if(request.loanStatus().equals(LoanStatus.FINISHED)) {
             if (request.returnDate() == null) {
-                throw new BusinessException("emprestimos finalizados precisam de uma data de retorno");
+                throw new BusinessException("empréstimos finalizados precisam de uma data de retorno");
             }else if(request.returnDate().isBefore(request.loanDate())){
-                throw new BusinessException("A data de retorno deve ser superior a data de criação");
+                throw new BusinessException("A data de devolução deve ser posterior à data do empréstimo.");
             }
         }
 
