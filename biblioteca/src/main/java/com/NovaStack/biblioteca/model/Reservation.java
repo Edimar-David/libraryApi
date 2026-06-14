@@ -1,10 +1,10 @@
 package com.NovaStack.biblioteca.model;
 
-import com.NovaStack.biblioteca.model.enums.LoanStatus;
-import com.NovaStack.biblioteca.model.enums.StatusReservation;
-import com.NovaStack.biblioteca.model.enums.TypeClient;
+import com.NovaStack.biblioteca.model.enums.ReservationStatus;
 import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDate;
 
@@ -18,7 +18,7 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDate reservationDate;
     @Enumerated(EnumType.STRING)
-    private StatusReservation statusReservation;
+    private ReservationStatus reservationStatus = ReservationStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "library_item_id", nullable = false)
@@ -30,6 +30,16 @@ public class Reservation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public Reservation(LocalDate reservationDate, ReservationStatus reservationStatus, LibraryItem libraryItem, Client client, User user) {
+        this.reservationDate = reservationDate;
+        if(reservationStatus != null) {
+            this.reservationStatus = reservationStatus;
+        }
+        this.libraryItem = libraryItem;
+        this.client = client;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -40,6 +50,14 @@ public class Reservation {
 
     public LocalDate getReservationDate() {
         return reservationDate;
+    }
+
+    public ReservationStatus getStatusReservation() {
+        return reservationStatus;
+    }
+
+    public void setStatusReservation(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
     }
 
     public void setReservationDate(LocalDate reservationDate) {

@@ -1,8 +1,8 @@
 package com.NovaStack.biblioteca.model.enums;
 
-public enum StatusReservation {
+public enum ReservationStatus {
     PENDING,
-    CONFIRMED,
+    AVAILABLE,
     CANCELLED,
     COMPLETED
 }

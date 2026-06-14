@@ -1,12 +1,12 @@
 package com.NovaStack.biblioteca.dto.Reservation;
 
-import com.NovaStack.biblioteca.model.enums.StatusReservation;
+import com.NovaStack.biblioteca.model.enums.ReservationStatus;
 
 import java.time.LocalDate;
 
 public record ReservationRequestDTO(
         LocalDate reservationDate,
-        StatusReservation statusReservation,
+        ReservationStatus reservationStatus,
         Long libraryItemId,
         Long clientId
 ) {
