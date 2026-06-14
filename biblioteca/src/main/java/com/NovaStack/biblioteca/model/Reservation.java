@@ -40,6 +40,9 @@ public class Reservation {
         this.user = user;
     }
 
+    public Reservation() {
+    }
+
     public Long getId() {
         return id;
     }

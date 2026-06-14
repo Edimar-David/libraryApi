@@ -16,7 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -47,6 +49,20 @@ public class ReservationService {
         return this.convertToResponse(reservation);
     }
 
+    public List<ReservationResponseDTO> getAll() {
+        User user = this.getUser();
+        List<Reservation> reservations = reservationRepository.findByUser(user);
+        List<ReservationResponseDTO> response = reservations.stream()
+                .map(r -> new ReservationResponseDTO(
+                        r.getId(),
+                        r.getReservationDate(),
+                        r.getStatusReservation(),
+                        r.getLibraryItem().getName(),
+                        r.getClient().getName()
+                )).collect(Collectors.toList());
+        return response;
+    }
+
     private ReservationResponseDTO convertToResponse(Reservation reservation){
         ReservationResponseDTO response = new ReservationResponseDTO(
                 reservation.getId(),
@@ -73,4 +89,5 @@ public class ReservationService {
             throw new ResourceNotFoundException("User not found");
         }
     }
+
 }

@@ -5,10 +5,9 @@ import com.NovaStack.biblioteca.dto.Reservation.ReservationResponseDTO;
 import com.NovaStack.biblioteca.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/reservation")
@@ -19,6 +18,12 @@ public class ReservationContoller {
     @PostMapping()
     public ResponseEntity<ReservationResponseDTO> create(@RequestBody ReservationRequestDTO request){
         ReservationResponseDTO response = service.create(request);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<ReservationResponseDTO>> getAll(){
+        List<ReservationResponseDTO> response = service.getAll();
         return ResponseEntity.ok().body(response);
     }
 }
