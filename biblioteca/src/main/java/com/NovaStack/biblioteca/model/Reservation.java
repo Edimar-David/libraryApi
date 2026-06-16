@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Reservation {
@@ -18,7 +19,7 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDate reservationDate;
     @Enumerated(EnumType.STRING)
-    private ReservationStatus reservationStatus = ReservationStatus.PENDING;
+    private ReservationStatus reservationStatus;
 
     @ManyToOne
     @JoinColumn(name = "library_item_id", nullable = false)
@@ -32,9 +33,7 @@ public class Reservation {
 
     public Reservation(LocalDate reservationDate, ReservationStatus reservationStatus, LibraryItem libraryItem, Client client, User user) {
         this.reservationDate = reservationDate;
-        if(reservationStatus != null) {
-            this.reservationStatus = reservationStatus;
-        }
+        this.reservationStatus = Objects.requireNonNullElse(reservationStatus, ReservationStatus.PENDING);
         this.libraryItem = libraryItem;
         this.client = client;
         this.user = user;
