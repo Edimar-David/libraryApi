@@ -44,9 +44,9 @@ public class LibraryItemService {
         return this.convertToResponse(item);
     }
 
-    public List<LibraryItem> getItemsNotBorrewed() {
+    public List<LibraryItem> getItemsIsBorrewed(Boolean isBorrowed) {
         User user = this.getUser();
-        List<LibraryItem> libraryItems = repository.findByUserAndIsBorrowed(user, false);
+        List<LibraryItem> libraryItems = repository.findByUserAndIsBorrowed(user, isBorrowed);
         return libraryItems;
     }
 

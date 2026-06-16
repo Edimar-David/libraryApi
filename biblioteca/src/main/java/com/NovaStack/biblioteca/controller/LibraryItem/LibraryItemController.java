@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,9 +25,9 @@ public class LibraryItemController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/notBorrowed")
-    public ResponseEntity<?> getItemsNotBorrewed(){
-        List<LibraryItem> response = service.getItemsNotBorrewed();
+    @GetMapping("/select")
+    public ResponseEntity<?> getItemsIsBorrewed(@RequestParam (required = true)  Boolean isBorrowed){
+        List<LibraryItem> response = service.getItemsIsBorrewed(isBorrowed);
         return ResponseEntity.ok().body(response);
     }
 
