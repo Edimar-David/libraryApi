@@ -26,4 +26,10 @@ public class ReservationContoller {
         List<ReservationResponseDTO> response = service.getAll();
         return ResponseEntity.ok().body(response);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ReservationResponseDTO> completedReservation(@RequestParam Boolean completeReservation, @PathVariable Long id){
+        ReservationResponseDTO response = service.completedReservation(completeReservation, id);
+        return ResponseEntity.ok().body(response);
+    }
 }

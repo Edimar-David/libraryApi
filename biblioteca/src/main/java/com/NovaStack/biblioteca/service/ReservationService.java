@@ -2,10 +2,12 @@ package com.NovaStack.biblioteca.service;
 
 import com.NovaStack.biblioteca.dto.Reservation.ReservationRequestDTO;
 import com.NovaStack.biblioteca.dto.Reservation.ReservationResponseDTO;
+import com.NovaStack.biblioteca.infra.exception.BusinessException;
 import com.NovaStack.biblioteca.infra.exception.ResourceNotFoundException;
 import com.NovaStack.biblioteca.model.Client;
 import com.NovaStack.biblioteca.model.Reservation;
 import com.NovaStack.biblioteca.model.User;
+import com.NovaStack.biblioteca.model.enums.ReservationStatus;
 import com.NovaStack.biblioteca.model.libraryItem.LibraryItem;
 import com.NovaStack.biblioteca.repository.ClientRepository;
 import com.NovaStack.biblioteca.repository.LibraryItemRepository;
@@ -63,6 +65,23 @@ public class ReservationService {
         return response;
     }
 
+    public ReservationResponseDTO completedReservation(Boolean completeReservation, Long id) {
+        User user = this.getUser();
+        Reservation reservation = reservationRepository.findByIdAndUser(id, user);
+
+        if (reservation.getStatusReservation() != ReservationStatus.AVAILABLE){
+            throw new BusinessException("Não é possível concluir ou cancelar uma reserva com status "
+                    + reservation.getStatusReservation() + ".");
+        }
+        if (completeReservation){
+            reservation.setStatusReservation(ReservationStatus.COMPLETED);
+        }else{
+            reservation.setStatusReservation(ReservationStatus.CANCELLED);
+        }
+        reservationRepository.save(reservation);
+        return this.convertToResponse(reservation);
+    }
+
     private ReservationResponseDTO convertToResponse(Reservation reservation){
         ReservationResponseDTO response = new ReservationResponseDTO(
                 reservation.getId(),
@@ -89,5 +108,6 @@ public class ReservationService {
             throw new ResourceNotFoundException("User not found");
         }
     }
+
 
 }
