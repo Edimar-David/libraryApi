@@ -1,5 +1,6 @@
 package com.NovaStack.biblioteca.service;
 
+import com.NovaStack.biblioteca.dto.Reservation.ListReservationResponseDTO;
 import com.NovaStack.biblioteca.dto.Reservation.ReservationRequestDTO;
 import com.NovaStack.biblioteca.dto.Reservation.ReservationResponseDTO;
 import com.NovaStack.biblioteca.infra.exception.BusinessException;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -51,17 +51,25 @@ public class ReservationService {
         return this.convertToResponse(reservation);
     }
 
-    public List<ReservationResponseDTO> getAll() {
+    public ListReservationResponseDTO getAll() {
         User user = this.getUser();
-        List<Reservation> reservations = reservationRepository.findByUser(user);
-        List<ReservationResponseDTO> response = reservations.stream()
+        List<Reservation> reservations = reservationRepository.findByUserOrderByReservationDate(user);
+        List<ReservationResponseDTO> reservationResponseDTOS = reservations.stream()
                 .map(r -> new ReservationResponseDTO(
                         r.getId(),
                         r.getReservationDate(),
                         r.getStatusReservation(),
                         r.getLibraryItem().getName(),
                         r.getClient().getName()
-                )).collect(Collectors.toList());
+                )).toList();
+        ListReservationResponseDTO response = new ListReservationResponseDTO(reservationResponseDTOS.stream()
+                .filter(r -> r.reservationStatus().equals(ReservationStatus.AVAILABLE))
+                .toList(),
+
+                reservationResponseDTOS.stream()
+                .filter(r -> !r.reservationStatus().equals(ReservationStatus.AVAILABLE))
+                .toList()
+        );
         return response;
     }
 

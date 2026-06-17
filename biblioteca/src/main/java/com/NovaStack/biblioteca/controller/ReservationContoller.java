@@ -1,5 +1,6 @@
 package com.NovaStack.biblioteca.controller;
 
+import com.NovaStack.biblioteca.dto.Reservation.ListReservationResponseDTO;
 import com.NovaStack.biblioteca.dto.Reservation.ReservationRequestDTO;
 import com.NovaStack.biblioteca.dto.Reservation.ReservationResponseDTO;
 import com.NovaStack.biblioteca.service.ReservationService;
@@ -22,8 +23,8 @@ public class ReservationContoller {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ReservationResponseDTO>> getAll(){
-        List<ReservationResponseDTO> response = service.getAll();
+    public ResponseEntity<ListReservationResponseDTO> getAll(){
+        ListReservationResponseDTO response = service.getAll();
         return ResponseEntity.ok().body(response);
     }
 
