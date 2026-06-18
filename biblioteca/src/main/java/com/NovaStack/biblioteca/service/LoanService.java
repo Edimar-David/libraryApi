@@ -138,7 +138,8 @@ public class LoanService {
 
         loan.setLoanStatus(LoanStatus.FINISHED);
         loan.setReturnDate(request.returnDate());
-
+        loan.getLibraryItem().setBorrowed(false);
+        itemRepository.save(loan.getLibraryItem());
         loanRepository.save(loan);
 
 
