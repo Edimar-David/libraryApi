@@ -120,6 +120,9 @@ public class LoanService {
                 .filter(l -> l.getDueDate().isBefore(date))
                 .forEach(l -> {
                     l.setLoanStatus(LoanStatus.OVERDUE);
+                    l.getClient().setBanned(true);
+                    l.getClient().setBanDate(LocalDate.now());
+                    clientRepository.save(l.getClient());
                     this.loanRepository.save(l);
                 });
 
