@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class ClientService {
 
     public List<ClientResponseDTO> getAllClients() {
         User user = this.getUser();
+        this.banClient(user);
         List<Client> clients = clientRepository.findByUser(user);
 
         List<ClientResponseDTO> response = clients.stream()
@@ -94,6 +96,19 @@ public class ClientService {
         User user = this.getUser();
         Client client = clientRepository.findByIdAndUser(id, user);
         clientRepository.delete(client);
+    }
+
+    private void banClient(User user){
+        List<Client> clients = clientRepository.findByUserAndIsBanned(user,true);
+        clients.stream().forEach(
+                c -> {
+                    if(!c.getBanDate().plusDays(5).isAfter(LocalDate.now())){
+                        c.setBanned(false);
+                        c.setBanDate(null);
+                        clientRepository.save(c);
+                    }
+                }
+        );
     }
 
     private ClientResponseDTO convertToResponse(Client client) {

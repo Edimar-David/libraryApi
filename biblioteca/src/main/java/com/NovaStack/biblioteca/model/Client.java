@@ -4,6 +4,7 @@ import com.NovaStack.biblioteca.dto.client.ClientRequestDTO;
 import com.NovaStack.biblioteca.model.enums.TypeClient;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,7 @@ public class Client {
     private TypeClient typeClient;
     private int reserveLimit;
     private boolean isBanned;
+    private LocalDate banDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -107,5 +109,13 @@ public class Client {
 
     public void setLoan(List<Loan> loan) {
         this.loan = loan;
+    }
+
+    public LocalDate getBanDate() {
+        return banDate;
+    }
+
+    public void setBanDate(LocalDate banDate) {
+        this.banDate = banDate;
     }
 }
