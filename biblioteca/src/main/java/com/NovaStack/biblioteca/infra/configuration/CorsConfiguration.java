@@ -10,7 +10,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://fernandomendees.github.io/NovaStack-Livros/", "http://127.0.0.1:5501", "http://localhost:5501")
+                .allowedOrigins("https://fernandomendees.github.io/NovaStack-Livros", "http://127.0.0.1:5501", "http://localhost:5501")
                 .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS");
     }
 
