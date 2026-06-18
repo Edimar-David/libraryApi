@@ -54,14 +54,7 @@ public class ReservationService {
     public ListReservationResponseDTO getAll() {
         User user = this.getUser();
         List<Reservation> reservations = reservationRepository.findByUserOrderByReservationDate(user);
-        List<ReservationResponseDTO> reservationResponseDTOS = reservations.stream()
-                .map(r -> new ReservationResponseDTO(
-                        r.getId(),
-                        r.getReservationDate(),
-                        r.getStatusReservation(),
-                        r.getLibraryItem().getName(),
-                        r.getClient().getName()
-                )).toList();
+        List<ReservationResponseDTO> reservationResponseDTOS = this.updateReservation(reservations);
         ListReservationResponseDTO response = new ListReservationResponseDTO(reservationResponseDTOS.stream()
                 .filter(r -> r.reservationStatus().equals(ReservationStatus.AVAILABLE))
                 .toList(),
@@ -88,6 +81,24 @@ public class ReservationService {
         }
         reservationRepository.save(reservation);
         return this.convertToResponse(reservation);
+    }
+
+    private List<ReservationResponseDTO> updateReservation(List<Reservation> reservations){
+        reservations.forEach(r -> {
+    if(!r.getLibraryItem().isBorrowed()){
+            r.setStatusReservation(ReservationStatus.AVAILABLE);
+            reservationRepository.save(r);
+        }
+    });
+        List<ReservationResponseDTO> response = reservations.stream()
+                .map(r -> new ReservationResponseDTO(
+                        r.getId(),
+                        r.getReservationDate(),
+                        r.getStatusReservation(),
+                        r.getLibraryItem().getName(),
+                        r.getClient().getName()
+                )).toList();
+        return response;
     }
 
     private ReservationResponseDTO convertToResponse(Reservation reservation){
