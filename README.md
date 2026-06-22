@@ -23,7 +23,7 @@ O projeto foi inicialmente criado como um trabalho acadêmico e atualmente está
 ## Gerenciamento de Itens
 O sistema suporta múltiplos tipos de itens utilizando herança e abstração.
 
-##### Tipos suportados:
+## Tipos suportados:
 - Livros
 - Revistas
 - Mídias
@@ -98,9 +98,9 @@ Essa abordagem facilita a extensibilidade e organização do domínio.
 
 ---
 
-# Abordagem Multi-Tenant
+# Abordagem Single-Tenant
 
-Cada conta de biblioteca possui gerenciamento próprio de:
+Cada usuário representa uma biblioteca que possui gerenciamento próprio de:
 - Clientes
 - Empréstimos
 - Catálogo
@@ -190,16 +190,15 @@ GET /loan
 O projeto ainda está em desenvolvimento.
 
 Melhorias planejadas:
-- Suporte a Docker
 - Documentação com Swagger/OpenAPI
 - Testes automatizados
 - Paginação e filtros
 - Renovação de empréstimos
-- Histórico de empréstimos
 - Sistema de fila para reservas
 - Refresh Token
 - Pipeline CI/CD
 - Controle de permissões por roles
+- Sistema Multi-Tenant
 - Monitoramento e observabilidade
 
 ---
@@ -213,7 +212,6 @@ Melhorias planejadas:
 - Busca por ISBN, autor e título
 - Filtros avançados
 - Rate limiting
-- Notificações por email
 - Dashboard e relatórios
 - Pipeline de deploy
 
